@@ -1,0 +1,22 @@
+<VirtualHost *:80>
+        ServerName %(project_domain)s
+
+        DocumentRoot "%(path)s/repo/%(project)s"
+		CustomLog /var/log/apache2/access.modwsgi.%(project)s.log common
+        ErrorLog /var/log/apache2/error.modwsgi.%(project)s.log
+        
+        WSGIScriptAlias / %(path)s/repo/%(project)s/index.wsgi
+        
+        WSGIDaemonProcess %(project_domain)s user=www-data group=www-data threads=1 processes=2 display-name=%(project_domain)s
+        WSGIProcessGroup %(project_domain)s
+		
+        Alias /static %(path)s/repo/%(project)s/static
+        Alias /media %(path)s/repo/%(project)s/media
+        
+        <Location "/static">
+            SetHandler None
+        </Location>
+        <Location "/media">
+            SetHandler None
+        </Location>
+</VirtualHost>

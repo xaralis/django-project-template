@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# activate the VirtualEnv
+source %(path)s/bin/activate
+# add the project to pythonpath
+export PYTHONPATH=$PYTHONPATH:%(path)s/repo
+# set current project
+export DJANGO_SETTINGS_MODULE=%(project)s.settings
+

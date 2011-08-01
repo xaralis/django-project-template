@@ -1,0 +1,5 @@
+#!/bin/bash
+
+source /etc/%(project)s/manage-%(project)s
+
+django-admin.py "$@"
