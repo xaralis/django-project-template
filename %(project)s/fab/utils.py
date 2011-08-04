@@ -14,13 +14,22 @@ def sync_db():
 def enable_site():
     sudo('a2ensite %(project)s-mod-wsgi' % env)
 
-def restart_apache():
+def restart_webserver():
     """Restart the web server"""
-    sudo('invoke-rc.d apache2 restart')
+    pass
 
-def reload_apache():
+def reload_webserver():
     """Restart the web server"""
-    sudo('/etc/init.d/apache2 reload')
+    pass
 
 def install_requirements():
     run('cd %(path)s; pip install -E . -r ./repo/requirements.pip' % env)
+    
+def refresh_db():
+    run('%(path)s/repo/bin/refresh_db' % env)
+    
+def pull_repo():
+    run("""
+        cd %(path)s/repo;
+        git pull;
+    """ % env)

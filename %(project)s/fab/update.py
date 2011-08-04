@@ -5,23 +5,12 @@ Created on 28.4.2011
 '''
 from fabric.api import env, run
 
-from utils import sync_db, reload_apache, install_requirements
+from utils import sync_db, reload_webserver, install_requirements, pull_repo
 
 def update_app():
     pull_repo()
     install_requirements()
-    symlink_media()
     sync_db()
-    reload_apache()
+    reload_webserver()
     
-def pull_repo():
-    run("""
-        cd %(path)s/repo;
-        git pull;
-    """ % env)
-    
-def symlink_media():
-    run('%(path)s/repo/bin/manage-%(project)s symlinkmedia' % env)
-    
-def refresh_db():
-    run('%(path)s/repo/bin/refresh_db' % env)
+

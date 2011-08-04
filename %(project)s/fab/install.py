@@ -12,8 +12,7 @@ from tempfile import gettempdir
 from fabric.api import env, run, sudo, local
 
 REQUIRED_DEBS = ('python', 'python-dev', 'python-setuptools',
-    'python-imaging', 'python-mysqldb', 'apache2-mpm-prefork',
-    'libapache2-mod-wsgi', 'mysql-server', 'memcached', 'git-core')
+    'python-imaging', 'python-mysqldb', 'git-core')
 
 from update import update_app
 
@@ -28,7 +27,6 @@ def prepare_environment():
     sudo('apt-get install -y %s' % " ".join(REQUIRED_DEBS))
     sudo('easy_install virtualenv>=1.6')
     sudo('easy_install pip')
-    sudo('a2enmod wsgi')
     sudo('mkdir -p %(path)s; chown -R %(user)s:www-data %(path)s' % env)
     run('virtualenv %(path)s' % env)
 
@@ -49,38 +47,10 @@ def clone_repo():
 
 def copy_configs():
     # expects etc configs to be on the same path level as fab package
-    temppath_prefix = join(gettempdir(), 'etc')
-    
-    if os.path.exists(temppath_prefix):
-        os.rmdir(temppath_prefix)
-    
-    path_prefix = join(dirname(__file__), '..', 'etc')
-    local('mkdir %s' % temppath_prefix)
-
-    for root, dirs, files in os.walk(path_prefix):
-        rel_path = root.replace(path_prefix , '').replace('template', env.project)
-        
-        if rel_path and rel_path[0] == '/':
-            rel_path = rel_path[1:]
-        
-        path = join(temppath_prefix, rel_path)
-        for dir in dirs:
-            local('mkdir %s' % join(path, dir.replace('template', env.project)))
-        for file in files:
-            old_file_path = join(root, file)
-            new_file_path = join(path, file.replace('template', env.project))
-            fin = open(old_file_path, 'r')
-            fout = open(new_file_path, 'w')
-            fout.write(fin.read() % env)
-            fout.close()
-            fin.close()
-    local('scp -r %s %s@%s:/tmp' % (temppath_prefix, env.user, env.host))
     sudo('''
         cd %s;
-        cp -r etc /;
+        cp -r %(path)s/etc /;
     ''' % gettempdir())
-    sudo('a2dissite 000-default' % env)
-    sudo('a2ensite %(project)s-mod-wsgi' % env)
 
 def create_db():
     """Create mysql database"""
@@ -94,3 +64,4 @@ def create_db():
             GRANT ALL PRIVILEGES ON %(project)s.* TO '%(project)s'@'%(db_host)s';
         " | mysql --host %(db_host)s -u %(db_superuser)s
     ''' % env)
+    
