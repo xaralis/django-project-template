@@ -12,6 +12,11 @@ env.use_south = True
 env.db_host = 'localhost'
 env.db_superuser = 'root'
 
+def localenv():
+    env.hosts = ['localhost',]
+    env.user = 'root'
+    env.branch = 'master'
+
 def production():
     env.hosts = []
     env.user = 'root'

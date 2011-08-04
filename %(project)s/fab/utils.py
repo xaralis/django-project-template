@@ -19,7 +19,7 @@ def restart_webserver():
     pass
 
 def reload_webserver():
-    """Restart the web server"""
+    """Reload the web server"""
     pass
 
 def install_requirements():
