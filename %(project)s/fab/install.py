@@ -47,7 +47,7 @@ def clone_repo():
 
 def copy_configs():
     # expects etc configs to be on the same path level as fab package
-    sudo('''cp -r %(path)s/etc /;''')
+    sudo('''cp -r %(path)s/etc /;''' % env)
 
 def create_db():
     """Create mysql database"""
