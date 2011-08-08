@@ -5,6 +5,9 @@ Created on 28.4.2011
 '''
 from fabric.api import env, run, sudo
 
+def apt_get(*packages):
+    sudo('apt-get -y install %s' % ' '.join(packages), shell=False)
+
 def sync_db():
     if env.use_south:
         run('%(path)s/repo/bin/manage-%(project)s syncdb --noinput --migrate' % env)
@@ -23,7 +26,7 @@ def reload_webserver():
     pass
 
 def install_requirements():
-    run('cd %(path)s; pip install -E . -r ./repo/requirements.pip' % env)
+    run('. %(path)s/bin/activate; cd %(path)s/repo; for FILE in ./requirements/*; do pip install -E .. -r $FILE; done' % env)
     
 def refresh_db():
     run('%(path)s/repo/bin/refresh_db' % env)

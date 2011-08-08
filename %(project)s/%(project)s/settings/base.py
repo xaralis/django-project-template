@@ -94,6 +94,12 @@ INSTALLED_APPS = (
     'south',
 )
 
+try:
+    import gunicorn
+    INSTALLED_APPS += ('gunicorn',)
+except ImportError:
+    pass
+
 # always freeze south migrations
 SOUTH_AUTO_FREEZE_APP = True
 
