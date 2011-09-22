@@ -13,20 +13,20 @@ Thus, we're changing module into package:
   * local.py contains (2) for your specific machine. File your defaults there.
 """
 
-from base import *
-from config import *
+from .base import *
+from .config import *
 
 # try to import some settings from /etc/
 import sys
-sys.path.insert(0, '/etc/mealplanner')
+sys.path.insert(0, '/etc/%(project)s')
 try:
-    from mealplanner_config import *
+    from %(project)s_config import *
 except ImportError:
     pass
 del sys.path[0]
 
 # load any settings for local development
 try:
-    from local import *
+    from .local import *
 except ImportError:
     pass
