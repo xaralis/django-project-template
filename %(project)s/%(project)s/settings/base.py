@@ -13,6 +13,9 @@ ADMINS = (
 )
 MANAGERS = ADMINS
 
+SENTRY_SERVERS = 'http://sentry.citrus1.fragaria.cz'
+SENTRY_KEY = '4PruW7%p#*9NxN6'
+
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.

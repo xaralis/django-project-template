@@ -1,4 +1,5 @@
 django
 south
+raven
 
 -e git+https://github.com/carljm/django-model-utils.git#egg=model_utils
