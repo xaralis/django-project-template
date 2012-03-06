@@ -10,7 +10,7 @@ urlpatterns = patterns('',
      url(r'^doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-     url(r'^', include(admin.site.urls)),
+     url(r'^admin/', include(admin.site.urls)),
 )
 
 urlpatterns += staticfiles_urlpatterns()
