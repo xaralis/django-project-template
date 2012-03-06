@@ -25,6 +25,3 @@ ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 # cache conf
 CACHE_BACKEND = 'dummy://'
 
-# logging conf
-LOGGING_CONFIG_FILE = p(os.path.join('settings', 'logger.conf'))
-
