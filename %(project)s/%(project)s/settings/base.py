@@ -7,9 +7,9 @@ import %(project)s
 gettext = lambda s: s
 
 PROJECT_ROOT = abspath(dirname(%(project)s.__file__))
+p = lambda x: os.path.join(PROJECT_ROOT, x)
 
 ADMINS = (
-    ('Filip Varecha', 'filip.varecha@fragaria.cz'),
 )
 MANAGERS = ADMINS
 
@@ -33,14 +33,14 @@ USE_L10N = True
 SITE_ID = 1
 
 # Absolute path to the directory that holds media.
-MEDIA_ROOT = join(PROJECT_ROOT, 'media')
+MEDIA_ROOT = p('media')
 
 ROOT_URLCONF = '%(project)s.urls'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -48,6 +48,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.http.ConditionalGetMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware'
+    'django.contrib.messages.middleware.MessageMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -62,20 +64,22 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    join(PROJECT_ROOT, 'templates'),
+    p('templates'),
 )
 
 FIXTURE_DIRS = (
-   join(PROJECT_ROOT, 'fixtures'),
+   p('fixtures'),
 )
 
-ODT_DIR = join(PROJECT_ROOT, 'templates', 'odt')
 
 STATICFILES_FINDERS = (
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder"
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder'
 )
-STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    p('static'),
+)
 
 INSTALLED_APPS = (
     # core django apps

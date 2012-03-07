@@ -10,14 +10,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': '%(project)s',
         'USER': 'root',
-        'PASSWORD': '',    },
+        'PASSWORD': '',
+    },
 }
 
 # media serving
 MEDIA_ROOT = p('media')
 MEDIA_URL = '/media/'
 
-STATIC_ROOT = p('static')
+STATIC_ROOT = p('staticc')
 STATIC_URL = '/static/' 
 
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
