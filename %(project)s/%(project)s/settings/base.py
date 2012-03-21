@@ -7,7 +7,7 @@ import %(project)s
 gettext = lambda s: s
 
 PROJECT_ROOT = abspath(dirname(%(project)s.__file__))
-p = lambda x: os.path.join(PROJECT_ROOT, x)
+p = lambda x: join(PROJECT_ROOT, x)
 
 ADMINS = (
 )
